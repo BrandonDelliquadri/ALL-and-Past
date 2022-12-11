@@ -1,0 +1,20 @@
+﻿Brandon Delliquadri
+12/11/22
+Design Specifications 
+of the 
+ALL and Past Implementation
+
+
+Modifications to ALL:
+        ALL is a distributed federated meta learning system made to analyze parking lot use patterns. It, like many other similar systems, has no built in way to recover metadata. To remedy this issue we added some code that allows for export and importing of torch pl files.
+        We added some debugging variables at line 20 that allows for flexibility in testing. This includes two booleans, testing and delete. When testing is true, ALL will use our added recovery systems with Past. When delete is true, ALL will occasionally simulate loss of metadata. Mod is another debug variable that dictates how often pl files are saved.
+        At like 36 we added a short input line that reminds users to start Past while ALL is running. This is done because Past and ALL are in two different languages and automating their collaboration proved to be a convoluted process. 
+        At line 118 we have the implementation of saving the output matrix to a pt file and then prompts the user to use Past to send the file to the Past vault.
+        Line 123 begins the simulation of deleting the output matrix and then asks the user to load the most recent matrix pt file from Past.
+
+
+
+
+Modifications to Past:
+Past is implemented via the redesign of the PastTutorial.java file within Pastry. Originally PastTutorial was designed to showcase what Past is capable of but by cutting out a majority of the useless actions the tutorial takes we can use it as an interface for saving and sending metadata files. To a more advanced sense it can save any type of file beyond just the metadata we used in this project. This is because we altered the program to take in a file and read its bytes into a string which is what is sent to the Past nodes. 
+Our design comprises a command prompt interface with two options. By running Past it will start and initialize the Past network. The first option is sending the metadata which will use the file location set in PastTutorial for a metadata file and then send it to the initiated Past network. the second option is the receive a metadata file which will search Past for the most recent file and then download it to a folder location that can be loaded by ALL
